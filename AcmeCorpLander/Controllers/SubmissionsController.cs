@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AcmeCorpLander.Data;
 using ClassLibrary;
+using AcmeCorpLander.Models;
 
 namespace AcmeCorpLander.Controllers
 {
@@ -20,9 +21,13 @@ namespace AcmeCorpLander.Controllers
         }
 
         // GET: Submissions
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber)
         {
-            return View(await _context.Submission.ToListAsync());
+            var submissions = _context.Submission;
+
+            int pageSize = 10;
+
+            return View(await PaginatedList<Submission>.CreateAsync(submissions.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
 
