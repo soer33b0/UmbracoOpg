@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AcmeCorpLander.Migrations
 {
     [DbContext(typeof(AcmeDbContext))]
-    [Migration("20200427092431_initCreate")]
-    partial class initCreate
+    [Migration("20200428175149_yeet")]
+    partial class yeet
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,7 +20,7 @@ namespace AcmeCorpLander.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ClassLibrary.Customer", b =>
+            modelBuilder.Entity("ClassLibrary.Submission", b =>
                 {
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(450)");
@@ -31,33 +31,14 @@ namespace AcmeCorpLander.Migrations
                     b.Property<int>("Entries")
                         .HasColumnType("int");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Email");
-
-                    b.ToTable("Customer");
-                });
-
-            modelBuilder.Entity("ClassLibrary.Submission", b =>
-                {
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
+                    b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SerialNum")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Wins")
                         .HasColumnType("int");
 
                     b.HasKey("Email");

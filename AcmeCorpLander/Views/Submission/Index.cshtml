@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>All Submissions</h1>
+<h1>All submissions</h1>
 
 <p>
     <a asp-action="Create">Enter draw here!</a>
@@ -13,16 +13,22 @@
     <thead>
         <tr>
             <th>
-                First Name
+                Full Name
             </th>
             <th>
-                Last Name
+                Email Address
             </th>
             <th>
-                Email
+                Age
             </th>
             <th>
                 Serial Number
+            </th>
+            <th>
+                Entries
+            </th>
+            <th>
+                Wins
             </th>
             <th></th>
         </tr>
@@ -32,25 +38,30 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
+                    @Html.DisplayFor(modelItem => item.FullName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.SerialNum)
                 </td>
                 <td>
-                    <a asp-action="Delete" asp-route-id="@item.Email">Delete</a>
+                    @Html.DisplayFor(modelItem => item.Entries)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Wins)
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.SerialNum">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";

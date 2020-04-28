@@ -15,6 +15,5 @@ namespace AcmeCorpLander.Data
         }
 
         public DbSet<Submission> Submission { get; set; }
-        public DbSet<Customer> Customer { get; set; }
     }
 }

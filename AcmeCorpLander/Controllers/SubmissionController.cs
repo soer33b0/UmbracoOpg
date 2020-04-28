@@ -11,16 +11,16 @@ using AcmeCorpLander.Models;
 
 namespace AcmeCorpLander.Controllers
 {
-    public class SubmissionsController : Controller
+    public class SubmissionController : Controller
     {
         private readonly AcmeDbContext _context;
 
-        public SubmissionsController(AcmeDbContext context)
+        public SubmissionController(AcmeDbContext context)
         {
             _context = context;
         }
 
-        // GET: Submissions
+        // GET: Submission
         public async Task<IActionResult> Index(int? pageNumber)
         {
             var submissions = _context.Submission;
@@ -31,18 +31,18 @@ namespace AcmeCorpLander.Controllers
         }
 
 
-        // GET: Submissions/Create
+        // GET: Submission/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Submissions/Create
+        // POST: Submission/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FirstName,LastName,Email,SerialNum")] Submission submission)
+        public async Task<IActionResult> Create([Bind("FullName,Email,Age,SerialNum,Entries,Wins")] Submission submission)
         {
             if (ModelState.IsValid)
             {
@@ -50,11 +50,13 @@ namespace AcmeCorpLander.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(submission);
         }
 
-        // GET: Submissions/Delete/5
-        public async Task<IActionResult> Delete(string id)
+
+        // GET: Submission/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -62,7 +64,7 @@ namespace AcmeCorpLander.Controllers
             }
 
             var submission = await _context.Submission
-                .FirstOrDefaultAsync(m => m.Email == id);
+                .FirstOrDefaultAsync(m => m.SerialNum == id);
             if (submission == null)
             {
                 return NotFound();
@@ -71,7 +73,7 @@ namespace AcmeCorpLander.Controllers
             return View(submission);
         }
 
-        // POST: Submissions/Delete/5
+        // POST: Submission/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -82,9 +84,9 @@ namespace AcmeCorpLander.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SubmissionExists(string id)
+        private bool SubmissionExists(int id)
         {
-            return _context.Submission.Any(e => e.Email == id);
+            return _context.Submission.Any(e => e.SerialNum == id);
         }
     }
 }

@@ -55,7 +55,7 @@ namespace AcmeCorpLander
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Submissions}/{action=Index}/{id?}");
+                    pattern: "{controller=Submission}/{action=Index}/{id?}");
             });
         }
     }
