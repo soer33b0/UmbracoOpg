@@ -13,6 +13,7 @@ namespace AcmeCorpLander.Data
             : base(options)
         {
         }
+
         public DbSet<Submission> Submission { get; set; }
         public DbSet<Customer> Customer { get; set; }
     }

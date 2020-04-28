@@ -22,6 +22,8 @@ namespace ClassLibrary
 
         public int Entries { get; set; }
 
+        public bool IsWinner = false;
+
         public Customer() { }
 
         public Customer(string _firstName, string _lastName, string _email, int _age)

@@ -8,16 +8,18 @@ namespace ClassLibrary
     {
         [Required]
         [DisplayName("First Name")]
+        [DataType(DataType.Text)]
         public string FirstName { get; set; }
         
         [Required]
         [DisplayName("Last Name")]
+        [DataType(DataType.Text)]
         public string LastName { get; set; }
         
         [Key]
         [Required]
         [DisplayName("E-mail Address")]
-        [EmailAddress(ErrorMessage = "Invalid Email")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Invalid Email")]
         public string Email { get; set; }
        
         [Required]
