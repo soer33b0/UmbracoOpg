@@ -20,26 +20,25 @@ namespace AcmeCorpLander.Models
             _db = db;
         }
 
-        List<int> validSerials = new List<int>();
-
         readonly string path = @".\serialNumbers.txt";
 
         public string ValidateSubmission(Submission submission)
         {
-            bool repeatEntry = RepeatEntryCheck(submission.SerialNum);
             bool serialValid = ValidateSerial(submission.SerialNum);
             bool winner = IsWinner(submission.SerialNum);
+            submission.Entries = UpdateEntries(submission);
             string message;
-            if (repeatEntry == true && serialValid == true && winner == false)
+
+            if (submission.Entries < 2 && serialValid == true && winner == false)
             {
                 submission.Entries++;
                 message = "You win... Nothing";
             }
-            else if (repeatEntry == true && serialValid == true && winner == true)
+            else if (submission.Entries < 2 && serialValid == true && winner == true)
             {
                 submission.Entries++;
                 submission.Wins++;
-                message = "Congratulations! You won the draw!";
+                message = "Congratulations! You've won a splinterny Puch Maxi!";
             }
             else
             {
@@ -48,8 +47,27 @@ namespace AcmeCorpLander.Models
             return message;
         }
 
+        public int UpdateEntries(Submission submission)
+        {
+            List<Submission> allSubmissions = GetSubmissions();
+
+            int entryCount = submission.Entries;
+
+            foreach (Submission i in allSubmissions)
+            {
+                if (submission.SerialNum == i.SerialNum)
+                {
+                    entryCount += i.Entries;
+                }
+            }
+
+            return entryCount;
+        }
+
         public bool ValidateSerial(int serial)
         {
+            List<int> validSerials = GetSerials();
+
             foreach (int s in validSerials)
             {
                 if (serial == s)
@@ -58,18 +76,6 @@ namespace AcmeCorpLander.Models
                 }
             }
 
-            return false;
-        }
-
-        public bool RepeatEntryCheck(int serial)
-        {
-            foreach (Submission s in _db.Submission.ToArray())
-            {
-                if (serial == s.SerialNum && s.Entries >= 2)
-                {
-                    return true;
-                }
-            }
             return false;
         }
 
@@ -83,22 +89,29 @@ namespace AcmeCorpLander.Models
             return false;
         }
 
-        public void GetSerials()
+        public List<Submission> GetSubmissions()
         {
+            return _db.Submission.ToList();
+        }
+
+        public List<int> GetSerials()
+        {
+            List<int> validSerials = new List<int>();
+
             if (File.Exists(path))
-            {  
-                using (StreamReader file = new StreamReader(path))
+            {
+                using StreamReader file = new StreamReader(path);
+                string line;
+
+                while ((line = file.ReadLine()) != null)
                 {
-                    string line;
-
-                    while ((line = file.ReadLine()) != null)
-                    {
-                        validSerials.Add(Convert.ToInt32(line));
-                    }
-
-                    file.Close();
+                    validSerials.Add(Convert.ToInt32(line));
                 }
+
+                file.Close();
             }
+
+            return validSerials;
         }
     }
 }
