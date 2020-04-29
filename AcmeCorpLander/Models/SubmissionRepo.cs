@@ -45,6 +45,8 @@ namespace AcmeCorpLander.Models
             {
                 message = "Sorry, closed for entry";
             }
+
+            _db.Add(submission);
             _db.SaveChanges();
 
             return message;

@@ -14,12 +14,14 @@ namespace AcmeCorpLander.Controllers
     public class SubmissionController : Controller
     {
         private readonly AcmeDbContext _context;
+        private readonly SubmissionRepo _subRepo;
 
-        public SubmissionController(AcmeDbContext context)
+        public SubmissionController(AcmeDbContext context, SubmissionRepo subrepo)
         {
             _context = context;
+            _subRepo = subrepo;
         }
-
+        
         // GET: Submission
         public async Task<IActionResult> Index(int? pageNumber)
         {
@@ -30,6 +32,11 @@ namespace AcmeCorpLander.Controllers
             return View(await PaginatedList<Submission>.CreateAsync(submissions.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
+        public IActionResult Validate(Submission submission)
+        {
+            string v = _subRepo.ValidateSubmission(submission);
+            return View();
+        }
 
         // GET: Submission/Create
         public IActionResult Create()
