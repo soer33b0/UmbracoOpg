@@ -16,10 +16,10 @@ namespace AcmeCorpLander.Controllers
         private readonly AcmeDbContext _context;
         private readonly SubmissionRepo _subRepo;
 
-        public SubmissionController(AcmeDbContext context, SubmissionRepo subrepo)
+        public SubmissionController(AcmeDbContext context, SubmissionRepo sr)
         {
             _context = context;
-            _subRepo = subrepo;
+            _subRepo = sr;
         }
         
         // GET: Submission
@@ -32,9 +32,10 @@ namespace AcmeCorpLander.Controllers
             return View(await PaginatedList<Submission>.CreateAsync(submissions.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
+        [HttpPost]
         public IActionResult Validate(Submission submission)
         {
-            string v = _subRepo.ValidateSubmission(submission);
+            _subRepo.ValidateSubmission(submission);
             return View();
         }
 
@@ -49,13 +50,16 @@ namespace AcmeCorpLander.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FullName,Email,Age,SerialNum,Entries,Wins")] Submission submission)
+        public async Task<IActionResult> Create([Bind("FullName,Email,Age,SerialNum")] Submission submission)
         {
             if (ModelState.IsValid)
             {
+                string v = "noooo";
+                v = _subRepo.ValidateSubmission(submission);
                 _context.Add(submission);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                return RedirectToAction(nameof(Validate));
             }
 
             return View(submission);
@@ -63,7 +67,7 @@ namespace AcmeCorpLander.Controllers
 
 
         // GET: Submission/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
@@ -71,7 +75,7 @@ namespace AcmeCorpLander.Controllers
             }
 
             var submission = await _context.Submission
-                .FirstOrDefaultAsync(m => m.SerialNum == id);
+                .FirstOrDefaultAsync(m => m.Email == id);
             if (submission == null)
             {
                 return NotFound();
@@ -91,9 +95,9 @@ namespace AcmeCorpLander.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SubmissionExists(int id)
+        private bool SubmissionExists(string id)
         {
-            return _context.Submission.Any(e => e.SerialNum == id);
+            return _context.Submission.Any(e => e.Email == id);
         }
     }
 }

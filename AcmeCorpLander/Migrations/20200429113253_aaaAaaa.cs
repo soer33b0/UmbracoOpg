@@ -2,7 +2,7 @@
 
 namespace AcmeCorpLander.Migrations
 {
-    public partial class yeet : Migration
+    public partial class aaaAaaa : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AcmeCorpLander.Migrations
 {
     [DbContext(typeof(AcmeDbContext))]
-    [Migration("20200428175149_yeet")]
-    partial class yeet
+    [Migration("20200429113253_aaaAaaa")]
+    partial class aaaAaaa
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

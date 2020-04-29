@@ -5,10 +5,13 @@
 }
 
 <h1>View</h1>
-
+<body>
 <div>
     <h4>Submission</h4>
     <hr />
+    <div>
+        @ViewBag.Message
+    </div>
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FullName)
@@ -43,6 +46,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Email">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+</body>

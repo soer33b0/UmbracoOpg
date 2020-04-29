@@ -20,22 +20,22 @@ namespace AcmeCorpLander.Models
             _db = db;
         }
 
+        List<int> validSerials = new List<int>();
+
         readonly string path = @".\serialNumbers.txt";
 
         public string ValidateSubmission(Submission submission)
         {
-            bool over18 = AgeCheck(submission.Age);
             bool repeatEntry = RepeatEntryCheck(submission.SerialNum);
             bool serialValid = ValidateSerial(submission.SerialNum);
             bool winner = IsWinner(submission.SerialNum);
             string message;
-
-            if (over18 == true && repeatEntry == true && serialValid == true && winner == false)
+            if (repeatEntry == true && serialValid == true && winner == false)
             {
                 submission.Entries++;
                 message = "You win... Nothing";
             }
-            else if (over18 == true && repeatEntry == true && serialValid == true && winner == true)
+            else if (repeatEntry == true && serialValid == true && winner == true)
             {
                 submission.Entries++;
                 submission.Wins++;
@@ -45,17 +45,11 @@ namespace AcmeCorpLander.Models
             {
                 message = "Sorry, closed for entry";
             }
-
-            _db.Add(submission);
-            _db.SaveChanges();
-
             return message;
         }
 
         public bool ValidateSerial(int serial)
         {
-            List<int> validSerials = GetSerials();
-
             foreach (int s in validSerials)
             {
                 if (serial == s)
@@ -64,15 +58,6 @@ namespace AcmeCorpLander.Models
                 }
             }
 
-            return false;
-        }
-
-        public bool AgeCheck(int age)
-        {
-            if (age > 18)
-            {
-                return true;
-            }
             return false;
         }
 
@@ -98,10 +83,8 @@ namespace AcmeCorpLander.Models
             return false;
         }
 
-        public List<int> GetSerials()
+        public void GetSerials()
         {
-            List<int> validSerials = new List<int>();
-
             if (File.Exists(path))
             {  
                 using (StreamReader file = new StreamReader(path))
@@ -116,8 +99,6 @@ namespace AcmeCorpLander.Models
                     file.Close();
                 }
             }
-
-            return validSerials;
         }
     }
 }
