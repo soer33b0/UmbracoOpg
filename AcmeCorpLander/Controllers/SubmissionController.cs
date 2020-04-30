@@ -41,15 +41,29 @@ namespace AcmeCorpLander.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FullName,Email,Age,SerialNum,Entries,Wins")] Submission submission)
         {
+            string v = _subRepo.ValidateSubmission(submission);
+            if (v == null)
+            {
+                return RedirectToAction(nameof(Error));
+            }
+            
             if (ModelState.IsValid)
             {
-                string v = _subRepo.ValidateSubmission(submission);
+                
+
                 _context.Add(submission);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
             return View(submission);
+        }
+
+
+
+        public IActionResult Error()
+        {
+            return View();
         }
     }
 }

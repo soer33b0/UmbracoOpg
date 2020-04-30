@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>
+                Serial Number
+            </th>
+            <th>
                 Full Name
             </th>
             <th>
@@ -20,12 +23,6 @@
             </th>
             <th>
                 Age
-            </th>
-            <th>
-                Serial Number
-            </th>
-            <th>
-                Entries
             </th>
             <th>
                 Wins
@@ -36,29 +33,26 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Age)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SerialNum)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Entries)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Wins)
-                </td>
-                <td>
-                    <a asp-action="Delete" asp-route-id="@item.SerialNum">Delete</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SerialNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Wins)
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.SerialNum">Delete</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

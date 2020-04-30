@@ -20,14 +20,17 @@ namespace AcmeCorpLander.Migrations
 
             modelBuilder.Entity("ClassLibrary.Submission", b =>
                 {
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int>("Entries")
-                        .HasColumnType("int");
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
                         .IsRequired()
@@ -39,7 +42,7 @@ namespace AcmeCorpLander.Migrations
                     b.Property<int>("Wins")
                         .HasColumnType("int");
 
-                    b.HasKey("Email");
+                    b.HasKey("Id");
 
                     b.ToTable("Submission");
                 });

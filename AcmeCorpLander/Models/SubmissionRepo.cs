@@ -26,38 +26,33 @@ namespace AcmeCorpLander.Models
         {
             bool serialValid = ValidateSerial(submission.SerialNum);
             bool winner = IsWinner(submission.SerialNum);
-            submission.Entries = UpdateEntries(submission);
-            string message;
+            int entries = EntryCheck(submission.SerialNum);
 
-            if (submission.Entries < 2 && serialValid == true && winner == false)
+            if (entries < 2 && serialValid == true && winner == false)
             {
-                submission.Entries++;
-                message = "You win... Nothing";
+                return "You win... Nothing";
             }
-            else if (submission.Entries < 2 && serialValid == true && winner == true)
+
+            else if (entries < 2 && serialValid == true && winner == true)
             {
-                submission.Entries++;
                 submission.Wins++;
-                message = "Congratulations! You've won a splinterny Puch Maxi!";
+                return "Congratulations! You've won a splinterny Puch Maxi!";
             }
-            else
-            {
-                message = "Sorry, closed for entry";
-            }
-            return message;
+
+            return null;
         }
 
-        public int UpdateEntries(Submission submission)
+        public int EntryCheck(int serial)
         {
             List<Submission> allSubmissions = GetSubmissions();
 
-            int entryCount = submission.Entries;
+            int entryCount = 0;
 
             foreach (Submission i in allSubmissions)
             {
-                if (submission.SerialNum == i.SerialNum)
+                if (serial == i.SerialNum)
                 {
-                    entryCount += i.Entries;
+                    entryCount++;
                 }
             }
 

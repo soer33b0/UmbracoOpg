@@ -7,24 +7,28 @@ namespace ClassLibrary
 {
     public class Submission
     {
+        [Key]
+        public int Id { get; set; }
+
         [Required]
         [DataType(DataType.Text)]
+        [Display(Name = "Full name")]
         public string FullName { get; set; }
-        
-        [Key]
+
         [Required]
         [DataType(DataType.EmailAddress, ErrorMessage = "Invalid Email")]
+        [Display(Name = "Email address")]
         public string Email { get; set; }
 
         [Required]
         [Range(18, 120, ErrorMessage ="Contestants must be over 18 years old")]
+        [Display(Name = "Your current age")]
         public int Age { get; set; }
 
         [Required]
         [Range(10000000, 99999999, ErrorMessage = "Must be 8 digits")]
+        [Display(Name = "Valid serial number")]
         public int SerialNum { get; set; }
-
-        public int Entries { get; set; }
 
         public int Wins { get; set; }
 

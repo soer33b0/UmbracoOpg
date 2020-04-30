@@ -2,7 +2,7 @@
 
 namespace AcmeCorpLander.Migrations
 {
-    public partial class aaaAaaa : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -10,16 +10,17 @@ namespace AcmeCorpLander.Migrations
                 name: "Submission",
                 columns: table => new
                 {
-                    Email = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     FullName = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
                     Age = table.Column<int>(nullable: false),
                     SerialNum = table.Column<int>(nullable: false),
-                    Entries = table.Column<int>(nullable: false),
                     Wins = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Submission", x => x.Email);
+                    table.PrimaryKey("PK_Submission", x => x.Id);
                 });
         }
 
