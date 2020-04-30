@@ -21,12 +21,51 @@ namespace AcmeCorpLander.Controllers
             _context = context;
             _subRepo = sr;
         }
-        
-        public async Task<IActionResult> Index(int? pageNumber)
-        {
-            var submissions = _context.Submission;
 
-            int pageSize = 10;
+        public async Task<IActionResult> Index(
+            string sortOrder, 
+            string currentFilter,
+            string searchString, 
+            int? pageNumber)
+        {
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["SerialSortParm"] = sortOrder == "SerialNum" ? "serial_desc" : "SerialNum";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var submissions = from s in _context.Submission
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                submissions = submissions.Where(s => s.FullName.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    submissions = submissions.OrderByDescending(s => s.FullName);
+                    break;
+                case "SerialNum":
+                    submissions = submissions.OrderBy(s => s.SerialNum);
+                    break;
+                case "serial_desc":
+                    submissions = submissions.OrderByDescending(s => s.SerialNum);
+                    break;
+                default:
+                    submissions = submissions.OrderBy(s => s.FullName);
+                    break;
+            }
+            int pageSize = 8;
 
             return View(await PaginatedList<Submission>.CreateAsync(submissions.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
