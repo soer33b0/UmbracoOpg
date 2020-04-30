@@ -25,18 +25,11 @@ namespace AcmeCorpLander.Models
         public string ValidateSubmission(Submission submission)
         {
             bool serialValid = ValidateSerial(submission.SerialNum);
-            bool winner = IsWinner(submission.SerialNum);
             int entries = EntryCheck(submission.SerialNum);
 
-            if (entries < 2 && serialValid == true && winner == false)
+            if (entries < 2 && serialValid == true)
             {
-                return "You win... Nothing";
-            }
-
-            else if (entries < 2 && serialValid == true && winner == true)
-            {
-                submission.Wins++;
-                return "Congratulations! You've won a splinterny Puch Maxi!";
+                return "Thanks for trying";
             }
 
             return null;
@@ -74,16 +67,6 @@ namespace AcmeCorpLander.Models
             return false;
         }
 
-        public bool IsWinner(int serial)
-        {
-            if (serial == 69029910)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         public List<Submission> GetSubmissions()
         {
             return _db.Submission.ToList();
@@ -107,6 +90,15 @@ namespace AcmeCorpLander.Models
             }
 
             return validSerials;
+        }
+
+        public Submission DrawWinner()
+        {
+            var random = new Random();
+            List<Submission> allSubmissions = GetSubmissions();
+            int index = random.Next(allSubmissions.Count);
+
+            return allSubmissions[index];
         }
     }
 }

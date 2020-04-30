@@ -22,6 +22,11 @@ namespace AcmeCorpLander.Controllers
             _subRepo = sr;
         }
 
+        public IActionResult Start()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> Index(
             string sortOrder, 
             string currentFilter,
@@ -80,15 +85,13 @@ namespace AcmeCorpLander.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FullName,Email,Age,SerialNum,Entries,Wins")] Submission submission)
         {
-            string v = _subRepo.ValidateSubmission(submission);
-            if (v == null)
-            {
-                return RedirectToAction(nameof(Error));
-            }
-            
             if (ModelState.IsValid)
             {
-                
+                string v = _subRepo.ValidateSubmission(submission);
+                if (v == null)
+                {
+                    return RedirectToAction(nameof(Error));
+                }
 
                 _context.Add(submission);
                 await _context.SaveChangesAsync();
@@ -98,11 +101,19 @@ namespace AcmeCorpLander.Controllers
             return View(submission);
         }
 
-
-
         public IActionResult Error()
         {
             return View();
+        }
+
+        public IActionResult DrawWinner()
+        {
+            Submission submission = _subRepo.DrawWinner();
+            ViewBag.wName = submission.FullName;
+            ViewBag.wEmail = submission.Email;
+            ViewBag.wSerial = submission.SerialNum;
+
+            return View(submission);
         }
     }
 }

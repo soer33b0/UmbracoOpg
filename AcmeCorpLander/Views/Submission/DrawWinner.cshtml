@@ -1,0 +1,32 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<h1>And the winner is...<br><br></h1>
+
+
+<script language=javascript type='text/javascript'>
+    function hideWinner() {
+        if (document.getElementById) {
+            document.getElementById('winnerInfo').style.visibility = 'hidden';
+        }
+    }
+    function showWinner() {
+        if (document.getElementById) {
+            document.getElementById('winnerInfo').style.visibility = 'visible';
+        }
+    }
+</script>
+
+<html>
+<body onload="javascript:hideWinner()">
+    <div id="winnerInfo">@ViewBag.wName, @ViewBag.wEmail, @ViewBag.wSerial</div>
+    <button onclick="showWinner()">Show winner</button>
+
+</body>
+</html>
+<br />
+<br />
+<br />
+
+<a asp-action="DrawWinner">Draw new winner</a>
