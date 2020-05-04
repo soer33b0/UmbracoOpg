@@ -21,7 +21,6 @@ namespace ClassLibrary
         public string Email { get; set; }
 
         [Required]
-        [Range(18, 120, ErrorMessage ="Contestants must be over 18 years old")]
         [Display(Name = "Your current age")]
         public int Age { get; set; }
 

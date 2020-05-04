@@ -17,7 +17,6 @@ namespace AcmeCorpLander.Models
                 serviceProvider.GetRequiredService<
                     DbContextOptions<AcmeDbContext>>()))
             {
-                // Look for any Submissions.
                 if (context.Submission.Any())
                 {
                     return;   // DB has been seeded
@@ -83,7 +82,7 @@ namespace AcmeCorpLander.Models
                     new Submission
                     {
                         FullName = "Ole Thestrup",
-                        Email = "skaldu@munkes.iskideren",
+                        Email = "hvaskød@duen.me",
                         Age = 80,
                         SerialNum = 67800879
                     }, 

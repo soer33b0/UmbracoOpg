@@ -88,7 +88,7 @@ namespace AcmeCorpLander.Controllers
             if (ModelState.IsValid)
             {
                 string v = _subRepo.ValidateSubmission(submission);
-                if (v == null)
+                if (v == "No entry")
                 {
                     return RedirectToAction(nameof(Error));
                 }

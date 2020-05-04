@@ -3,6 +3,7 @@ using ClassLibrary;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,9 +28,24 @@ namespace AcmeCorpLander.Models
             bool serialValid = ValidateSerial(submission.SerialNum);
             int entries = EntryCheck(submission.SerialNum);
 
-            if (entries < 2 && serialValid == true)
+            if (submission.Age < 18)
             {
-                return "Thanks for trying";
+                return "No entry";
+            }
+
+            else if (serialValid == false)
+            {
+                return "Invalid serial number";
+            }
+
+            else if (entries >= 2)
+            {
+                return "Too many entries";
+            }
+            
+            else if (submission.Age > 17 && entries < 2 && serialValid == true)
+            {
+                return "Thank you for entering the contest, you will receive an email when the winner is drawn";
             }
 
             return null;
@@ -74,6 +90,8 @@ namespace AcmeCorpLander.Models
 
         public List<int> GetSerials()
         {
+            
+
             List<int> validSerials = new List<int>();
 
             if (File.Exists(path))
@@ -97,8 +115,14 @@ namespace AcmeCorpLander.Models
             var random = new Random();
             List<Submission> allSubmissions = GetSubmissions();
             int index = random.Next(allSubmissions.Count);
+            Submission sub = allSubmissions[index];
 
-            return allSubmissions[index];
+            sub.Wins++;
+            _db.Update(sub);
+            _db.SaveChangesAsync();
+
+
+            return sub;
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿<h3>
-    An error has occurred. Please check if your serial number is valid and has not been entered twice and try again.
-</h3>
+    One of the following things went wrong: <br />
+<h3>
+    <h5>
+        1. You are under 18 years old <br />
+        2. Serial number is invalid <br />
+        3. This serial number has been used to enter the contest twice before
+    </h5>
 
-<div>
-    <a asp-action="Create">Try again</a>
-</div>
-<div>
-    <a asp-action="Index">Back to submissions overview</a>
-</div>
+<a asp-action="Create">Try again</a> <br />
+<a asp-action="Index">Back to submissions overview</a>
