@@ -3,9 +3,7 @@ using ClassLibrary;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AcmeCorpLander.Models
 {
@@ -78,28 +76,28 @@ namespace AcmeCorpLander.Models
                         Email = "cc@klovn.dk",
                         Age = 52,
                         SerialNum = 65996900
-                    }, 
+                    },
                     new Submission
                     {
                         FullName = "Ole Thestrup",
                         Email = "hvaskød@duen.me",
                         Age = 80,
                         SerialNum = 67800879
-                    }, 
+                    },
                     new Submission
                     {
                         FullName = "Kim Larsen",
                         Email = "kl@gasolin.dk",
                         Age = 63,
                         SerialNum = 74457705
-                    }, 
+                    },
                     new Submission
                     {
                         FullName = "Margrethe II",
                         Email = "majestæten@kongehuset.dk",
                         Age = 80,
                         SerialNum = 59395710
-                    }, 
+                    },
                     new Submission
                     {
                         FullName = "Mads Mikkelsen",

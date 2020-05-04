@@ -1,14 +1,9 @@
 ﻿using AcmeCorpLander.Data;
 using ClassLibrary;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AcmeCorpLander.Models
 {
@@ -25,12 +20,13 @@ namespace AcmeCorpLander.Models
 
         public string ValidateSubmission(Submission submission)
         {
+            bool over18 = Over18(submission.Age);
             bool serialValid = ValidateSerial(submission.SerialNum);
             int entries = EntryCheck(submission.SerialNum);
 
-            if (submission.Age < 18)
+            if (over18 == false)
             {
-                return "No entry";
+                return "Must be over 18";
             }
 
             else if (serialValid == false)
@@ -42,13 +38,23 @@ namespace AcmeCorpLander.Models
             {
                 return "Too many entries";
             }
-            
-            else if (submission.Age > 17 && entries < 2 && serialValid == true)
+
+            else if (over18 == true && entries < 2 && serialValid == true)
             {
                 return "Thank you for entering the contest, you will receive an email when the winner is drawn";
             }
 
             return null;
+        }
+
+        public bool Over18(int age)
+        {
+            if (age >= 18)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public int EntryCheck(int serial)
@@ -57,9 +63,9 @@ namespace AcmeCorpLander.Models
 
             int entryCount = 0;
 
-            foreach (Submission i in allSubmissions)
+            foreach (Submission s in allSubmissions)
             {
-                if (serial == i.SerialNum)
+                if (serial == s.SerialNum)
                 {
                     entryCount++;
                 }
@@ -90,7 +96,7 @@ namespace AcmeCorpLander.Models
 
         public List<int> GetSerials()
         {
-            
+
 
             List<int> validSerials = new List<int>();
 

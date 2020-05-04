@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AcmeCorpLander.Data;
+using AcmeCorpLander.Models;
+using ClassLibrary;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AcmeCorpLander.Data;
-using ClassLibrary;
-using AcmeCorpLander.Models;
 
 namespace AcmeCorpLander.Controllers
 {
@@ -28,9 +26,9 @@ namespace AcmeCorpLander.Controllers
         }
 
         public async Task<IActionResult> Index(
-            string sortOrder, 
+            string sortOrder,
             string currentFilter,
-            string searchString, 
+            string searchString,
             int? pageNumber)
         {
             ViewData["CurrentSort"] = sortOrder;
@@ -49,7 +47,7 @@ namespace AcmeCorpLander.Controllers
             ViewData["CurrentFilter"] = searchString;
 
             var submissions = from s in _context.Submission
-                           select s;
+                              select s;
             if (!String.IsNullOrEmpty(searchString))
             {
                 submissions = submissions.Where(s => s.FullName.Contains(searchString));
@@ -83,12 +81,12 @@ namespace AcmeCorpLander.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FullName,Email,Age,SerialNum,Entries,Wins")] Submission submission)
+        public async Task<IActionResult> Create([Bind("FullName,Email,Age,SerialNum,Wins")] Submission submission)
         {
             if (ModelState.IsValid)
             {
                 string v = _subRepo.ValidateSubmission(submission);
-                if (v == "No entry")
+                if (v == "No entry" || v == "Invalid serial number" || v == "Too many entries")
                 {
                     return RedirectToAction(nameof(Error));
                 }
@@ -98,6 +96,38 @@ namespace AcmeCorpLander.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            return View(submission);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Email,Age,SerialNum,Entries,Wins")] Submission submission)
+        {
+            if (id != submission.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(submission);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!SubmissionExists(submission.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
             return View(submission);
         }
 
@@ -114,6 +144,10 @@ namespace AcmeCorpLander.Controllers
             ViewBag.wSerial = submission.SerialNum;
 
             return View(submission);
+        }
+        private bool SubmissionExists(int id)
+        {
+            return _context.Submission.Any(e => e.Id == id);
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClassLibrary
 {
@@ -28,6 +26,8 @@ namespace ClassLibrary
         [Range(10000000, 99999999, ErrorMessage = "Must be 8 digits")]
         [Display(Name = "Valid serial number")]
         public int SerialNum { get; set; }
+
+        //public int Entries { get; set; }
 
         public int Wins { get; set; }
 
