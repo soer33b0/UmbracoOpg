@@ -20,28 +20,31 @@ namespace AcmeCorpLander.Models
 
         public string ValidateSubmission(Submission submission)
         {
-            bool over18 = Over18(submission.Age);
-            bool serialValid = ValidateSerial(submission.SerialNum);
-            int entries = EntryCheck(submission.SerialNum);
-
-            if (over18 == false)
+            if (submission.FullName != null && submission.Email != null)
             {
-                return "Must be over 18";
-            }
+                bool over18 = Over18(submission.Age);
+                bool serialValid = ValidateSerial(submission.SerialNum);
+                int entries = EntryCheck(submission.SerialNum);
 
-            else if (serialValid == false)
-            {
-                return "Invalid serial number";
-            }
+                if (over18 == false)
+                {
+                    return "Must be over 18";
+                }
 
-            else if (entries >= 2)
-            {
-                return "Too many entries";
-            }
+                else if (serialValid == false)
+                {
+                    return "Invalid serial number";
+                }
 
-            else if (over18 == true && entries < 2 && serialValid == true)
-            {
-                return "Thank you for entering the contest, you will receive an email when the winner is drawn";
+                else if (entries >= 2)
+                {
+                    return "Too many entries";
+                }
+
+                else if (over18 == true && entries < 2 && serialValid == true)
+                {
+                    return "Thank you for entering the contest, you will receive an email when the winner is drawn";
+                }
             }
 
             return null;

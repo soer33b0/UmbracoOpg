@@ -86,7 +86,7 @@ namespace AcmeCorpLander.Controllers
             if (ModelState.IsValid)
             {
                 string v = _subRepo.ValidateSubmission(submission);
-                if (v == "No entry" || v == "Invalid serial number" || v == "Too many entries")
+                if (v == null || v == "No entry" || v == "Invalid serial number" || v == "Too many entries")
                 {
                     return RedirectToAction(nameof(Error));
                 }
