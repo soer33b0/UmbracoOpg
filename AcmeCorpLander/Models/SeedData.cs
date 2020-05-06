@@ -23,23 +23,23 @@ namespace AcmeCorpLander.Models
                 context.Submission.AddRange(
                     new Submission
                     {
-                        FullName = "Martin Jensen",
-                        Email = "mj@j22.dk",
+                        FullName = "Rasmus Paludan",
+                        Email = "rp@stramkurs.dk",
                         Age = 22,
                         SerialNum = 58079554
                     },
                     new Submission
                     {
-                        FullName = "Jørgen Hansen",
-                        Email = "jh@f12.dk",
+                        FullName = "Kaj Boyesen",
+                        Email = "abe@hotmail.com",
                         Age = 45,
                         SerialNum = 82514261
                     },
                     new Submission
                     {
-                        FullName = "Jonas Mogensen",
-                        Email = "jm@nej.dk",
-                        Age = 38,
+                        FullName = "Søren Malling",
+                        Email = "sm@hotmail.com",
+                        Age = 55,
                         SerialNum = 38875640
                     },
                     new Submission
