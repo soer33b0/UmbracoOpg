@@ -21,11 +21,7 @@ Visual Studio 2019 with the ASP.NET and web development workload.
 
 .Net Core 3.1 SDK or later.
 
-In Visual Studio, under Tools > NuGet Package Manager > Package Manager Console, enter the following commands to install Entity Framework Core NuGet package and set up the database: 
-
-	Install-Package Microsoft.EntityFrameworkCore.SqlServer
-	
-	Install-Package Microsoft.EntityFrameworkCore.InMemory
+In Visual Studio, under Tools > NuGet Package Manager > Package Manager Console, enter the following command to set up the database: 
 	
 	Update-Database
 
