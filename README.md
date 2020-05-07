@@ -13,7 +13,13 @@ The rules for entering the draw are:
 
 Getting started:
 
-You will need DotNet SDK 3.1 or later.
+You will need:
+
+Windows OS
+
+Visual Studio 2019 with the ASP.NET and web development workload.
+
+.Net Core 3.1 SDK or later.
 
 In Visual Studio, under Tools > NuGet Package Manager > Package Manager Console, enter the following commands to install Entity Framework Core NuGet package and set up the database: 
 
@@ -24,8 +30,6 @@ In Visual Studio, under Tools > NuGet Package Manager > Package Manager Console,
 	Update-Database
 
 The database will be seeded upon start using serialNumbers from line 88-100 in the serialNumbers.txt file. Therefore you will not be able to use these for creating a submission.
-	
-For more info on installing Entity Framework Core: https://docs.microsoft.com/en-us/ef/core/get-started/install/
 
 When the application is run (F5) with IIS Express, you land on the start page. From here, you can enter the draw by clicking the link below the picture of the very attractive main prize, and enter the draw twice, if you follow the rules of admission. 
 A list of all the submissions, with 10 submission per page, can be seen under the "Submissions" tab at the top of each page. 
