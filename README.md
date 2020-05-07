@@ -4,14 +4,27 @@
 A web appilication developed for Acme Corporation in Asp.NET core with entity framework for entering a contest pool, from which a winner will be drawn.
 
 The rules for entering the draw are: 
+
 	1. You are over 18. 
+	
 	2. You have a valid serial number of one of Acme Corporations products (serialNumbers.txt).
+	
 	3. Two submissions can be made with the same valid serial number.
 
 Getting started:
-In Visual Studio, under Tools > NuGet Package Manager > Package Manager Console, enter the following commands: 
+
+You will need DotNet SDK 3.1 or later.
+
+In Visual Studio, under Tools > NuGet Package Manager > Package Manager Console, enter the following commands to install Entity Framework Core NuGet package and set up the database: 
+
 	Install-Package Microsoft.EntityFrameworkCore.SqlServer
+	
 	Install-Package Microsoft.EntityFrameworkCore.InMemory
+	
+	Update-Database
+
+The database will be seeded upon start using serialNumbers from line 88-100 in the serialNumbers.txt file. Therefore you will not be able to use these for creating a submission.
+	
 For more info on installing Entity Framework Core: https://docs.microsoft.com/en-us/ef/core/get-started/install/
 
 When the application is run (F5) with IIS Express, you land on the start page. From here, you can enter the draw by clicking the link below the picture of the very attractive main prize, and enter the draw twice, if you follow the rules of admission. 
