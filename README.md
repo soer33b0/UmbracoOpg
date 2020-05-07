@@ -1,7 +1,7 @@
 # UmbracoOpg
 
 
-A web appilication developed for Acme Corporation in Asp.NET core with entity framework for entering a contest pool, from which a winner will be drawn.
+A web appilication developed for Acme Corporation in Asp.NET core with Entity Framework Core for entering a contest pool, from which a winner will be drawn.
 
 The rules for entering the draw are: 
 
@@ -29,6 +29,6 @@ The database will be seeded upon start using serialNumbers from line 88-100 in t
 
 When the application is run (F5) with IIS Express, you land on the start page. From here, you can enter the draw by clicking the link below the picture of the very attractive main prize, and enter the draw twice, if you follow the rules of admission. 
 A list of all the submissions, with 10 submission per page, can be seen under the "Submissions" tab at the top of each page. 
-If you wish to draw a winner from all the submissions, head on over to https://localhost/_____/submission/drawwinner.
+If you wish to draw a winner from all the submissions, head on over to /submission/drawwinner.
 
 Unit tests for validating form input data can be found in the separate project called UnitTestProject1.
